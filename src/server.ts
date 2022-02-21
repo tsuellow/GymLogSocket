@@ -4,7 +4,11 @@ import { Server, Socket } from "socket.io";
 
 const app: express.Express = express();
 const server: http.Server = http.createServer(app);
-const io: Server = new Server(server);
+const io: Server = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 const port = process.env.PORT || 81;
 
 io.on("connection", (socket: Socket) => {
