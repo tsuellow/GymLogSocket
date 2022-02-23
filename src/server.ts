@@ -18,25 +18,27 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("clientInfo", (data) => {
     socket.broadcast.to(room).emit("clientInfo", data);
-    console.log("request client info" + data);
+    console.log("request client info", data);
   });
 
   socket.on("payment", (data) => {
     socket.broadcast.to(room).emit("payment", data);
-    console.log("got payment" + data);
+    console.log("got payment", data);
   });
 
   socket.on("createClient", (data) => {
     socket.broadcast.to(room).emit("createClient", data);
-    console.log("got create" + data);
+    console.log("got createClient", data);
   });
 
   socket.on("paymentConfirmation", (data) => {
     socket.broadcast.to(room).emit("acknowledgment", data);
+    console.log("paymentConfirmation", data);
   });
 
   socket.on("createConfirmation", (data) => {
     socket.broadcast.to(room).emit("acknowledgment", data);
+    console.log("createConfirmation", data);
   });
 });
 
