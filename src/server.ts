@@ -12,33 +12,25 @@ const io: Server = new Server(server, {
 const port = process.env.PORT || 81;
 
 io.on("connection", (socket: Socket) => {
-  const room = socket.handshake.query.branch!;
-  console.log("conn established, joining branch: " + room);
+  // room on the client is gymid_branch. eg: "uf_ESTELI"
+  const room = socket.handshake.query.room!;
+  console.log("conn established, joining room: " + room);
   socket.join(room);
 
+  // request client info to the
   socket.on("clientInfo", (data) => {
     socket.broadcast.to(room).emit("clientInfo", data);
-    console.log("request client info", data);
+    console.log("request/response client info", data);
   });
 
   socket.on("payment", (data) => {
     socket.broadcast.to(room).emit("payment", data);
-    console.log("got payment", data);
+    console.log("create/response payment", data);
   });
 
   socket.on("createClient", (data) => {
     socket.broadcast.to(room).emit("createClient", data);
-    console.log("got createClient", data);
-  });
-
-  socket.on("paymentConfirmation", (data) => {
-    socket.broadcast.to(room).emit("acknowledgment", data);
-    console.log("paymentConfirmation", data);
-  });
-
-  socket.on("createConfirmation", (data) => {
-    socket.broadcast.to(room).emit("acknowledgment", data);
-    console.log("createConfirmation", data);
+    console.log("create/response createClient", data);
   });
 });
 
