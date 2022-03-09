@@ -9,7 +9,7 @@ const io: Server = new Server(server, {
     origin: "*",
   },
 });
-const port = process.env.PORT || 81;
+const port = process.env.PORT || 3005;
 
 io.on("connection", (socket: Socket) => {
   // room on the client is gymid_branch. eg: "uf_ESTELI"
