@@ -16,14 +16,18 @@ const port = process.env.PORT || 3005;
 const connectedGyms: ConnectedGym[] = [];
 
 io.on("connection", (socket: Socket) => {
-  // room on the client is gymid_branch. eg: "uf_ESTELI"
-  let room = socket.handshake.query.room?.toString() || socket.id;
+  const gymId = socket.handshake.query.gymId?.toString();
+  const branch = socket.handshake.query.branch?.toString();
+  // room on the client is gymId_branch. eg: "uf_ESTELI"
+  let room = gymId && branch ? `${gymId}_${branch}` : socket.id;
   const receptionists = socket.handshake.headers.receptionists;
 
   if (receptionists) {
     const gym = {
       id: socket.id,
       room,
+      gymId,
+      branch,
       receptionists: JSON.parse(receptionists.toString()),
     };
     connectedGyms.push(gym);
@@ -63,7 +67,7 @@ io.on("connection", (socket: Socket) => {
     if (r) {
       room = r;
       socket.join(room);
-      socket.emit("joinRoom", { status: "OK", room });
+      socket.emit("joinRoom", { status: "OK", room, branch: found.branch });
     } else {
       socket.emit("joinRoom", { status: "NOK" });
     }
