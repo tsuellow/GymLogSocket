@@ -10,7 +10,7 @@
 
     docker run --name gymlog-socket-container --rm -d andresabadia/gymlog-socket
 
-### Run with componse
+### Run with compose
 
 `docker-compose up -d`
 
