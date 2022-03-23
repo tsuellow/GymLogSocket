@@ -1,6 +1,6 @@
 version: '3'
 services:
   gymlog-socket:
-    image: 'andresabadia/gymlog-socket:1.0.3'
+    image: 'andresabadia/gymlog-socket:1.0.4'
     ports:
       - '3005:3005'
