@@ -67,7 +67,12 @@ io.on("connection", (socket: Socket) => {
     if (r) {
       room = r;
       socket.join(room);
-      socket.emit("joinRoom", { status: "OK", room, branch: found.branch });
+      socket.emit("joinRoom", {
+        status: "OK",
+        room,
+        branch: found.branch,
+        gymId: found.gymId,
+      });
     } else {
       socket.emit("joinRoom", { status: "NOK" });
     }
